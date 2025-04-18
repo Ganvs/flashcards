@@ -7,8 +7,9 @@ async def read_root():
     return {"message": "Hello FastAPI"}
 
 @app.get("/items")
-async def read_all_items():
-    return {"items": "nothing in stock yet!!"}
+async def read_all_items(start: int = 0, total_items: int = 50, page_limit: int = 10, page: int = 1):
+    items = [{"name": f"Item {i}"} for i in range(start + ((page - 1) * page_limit), (start + ((page - 1) * page_limit)) + page_limit)]
+    return items
 
 @app.get("/items/{item_id}")
 async def read_item(item_id: int):
